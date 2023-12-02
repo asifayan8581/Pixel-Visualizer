@@ -1,0 +1,45 @@
+#import libraries
+import cv2 as cv
+import numpy as np
+import webbrowser
+
+img=cv.imread("C://Users//asifa//Downloads//Plane.jpg",1)
+cv.imshow("Image", img)
+cv.waitKey(0)
+cv.destroyAllWindows()
+
+img.shape
+
+import cv2 as cv
+
+# Global variable to store coordinates
+coordinates = []
+
+# Define the function
+def find_coord(event, x, y, flags, params):
+    global coordinates
+    if event == cv.EVENT_FLAG_LBUTTON:
+        coordinates.append((x, y))
+        print(x, ',', y)
+        font = cv.FONT_HERSHEY_PLAIN
+        cv.putText(img, str(x) + ',' + str(y), (x, y), font, 1, (255, 0, 0))
+        cv.imshow("image", img)
+
+if __name__ == "__main__":
+    img = cv.imread("C://Users//asifa//Downloads//Plane.jpg")
+    cv.imshow("image", img)
+    cv.setMouseCallback("image", find_coord)
+    
+    # Wait for user to press any key
+    cv.waitKey(0)
+    
+    # Display the stored coordinates
+    print("Stored Coordinates:", coordinates)
+    
+    # Display RGB values of the last selected coordinate
+    if coordinates:
+        x, y = coordinates[-1]
+        B, G, R = img[y, x]
+        print("RGB Values at ({}, {}): R={}, G={}, B={}".format(x, y, R, G, B))
+    
+    cv.destroyAllWindows()
